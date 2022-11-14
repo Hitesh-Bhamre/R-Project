@@ -34,6 +34,7 @@ trimmed_df %>%
 
 #combine arrival month and year into one column
 
+
 combine_df <- booking_df %>%
   select(arrival_date_month,arrival_date_year) %>%
   unite(arrival_month_year, c('arrival_date_month','arrival_date_year'), sep = ' ')
@@ -49,3 +50,9 @@ combine_df <- booking_df %>%
   summarise(number_canceled = sum(is_canceled),
             average_lead_time = mean(lead_time))
 head(combine_df)
+
+ggplot(data = hotel_bookings) +
+  geom_point(mapping = aes(x = lead_time, y = children))
+
+ggplot(data = hotel_bookings) +
+  geom_point(mapping = aes(x = stays_in_weekend_nights, y = children))

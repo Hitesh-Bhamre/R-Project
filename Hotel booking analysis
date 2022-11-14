@@ -60,3 +60,5 @@ ggplot(data = booking_df) +
 ggplot(data=booking_df)+
   geom_bar(mapping = aes(x=hotel,color=hotel))
   
+ggplot(data=booking_df)+
+  geom_bar(mapping = aes(x=hotel,fill=hotel))

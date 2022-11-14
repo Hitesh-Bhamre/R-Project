@@ -51,8 +51,12 @@ combine_df <- booking_df %>%
             average_lead_time = mean(lead_time))
 head(combine_df)
 
-ggplot(data = hotel_bookings) +
+ggplot(data = booking_df) +
   geom_point(mapping = aes(x = lead_time, y = children))
 
-ggplot(data = hotel_bookings) +
+ggplot(data = booking_df) +
   geom_point(mapping = aes(x = stays_in_weekend_nights, y = children))
+  
+ggplot(data=booking_df)+
+  geom_bar(mapping = aes(x=hotel,color=hotel))
+  

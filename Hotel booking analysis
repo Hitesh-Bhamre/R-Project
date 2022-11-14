@@ -1,0 +1,51 @@
+#hotel booking dataset
+
+install.packages('tidyverse')
+install.packages('skimr')
+install.packages('janitor')
+
+library(tidyverse)
+library(skimr)
+library(janitor)
+library(dplyr)
+
+#import data
+
+booking_df <- read_csv("hotel_booking.csv")
+
+head(booking_df)
+str(booking_df)
+glimpse(booking_df)
+
+colnames(booking_df)
+skim_without_charts(booking_df)
+
+trimmed_df <- booking_df %>% 
+  select('hotel','is_canceled','lead_time')
+head(trimmed_df)
+
+#data cleaning
+
+#rename the columns name
+
+trimmed_df %>% 
+  select(hotel,is_canceled,lead_time) %>%
+  rename(hotel_type = hotel)
+
+#combine arrival month and year into one column
+
+combine_df <- booking_df %>%
+  select(arrival_date_month,arrival_date_year) %>%
+  unite(arrival_month_year, c('arrival_date_month','arrival_date_year'), sep = ' ')
+
+combine_df <- booking_df %>% 
+  mutate(guests = adults + children + babies)
+
+head(combine_df)
+
+#calculate the total number of canceled booking
+
+combine_df <- booking_df %>% 
+  summarise(number_canceled = sum(is_canceled),
+            average_lead_time = mean(lead_time))
+head(combine_df)

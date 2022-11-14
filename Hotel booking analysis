@@ -88,3 +88,11 @@ ggplot(data = booking_df) +
 ggplot(data = booking_df) +
   geom_bar(mapping = aes(x = distribution_channel)) +
   facet_wrap(~deposit_type~market_segment)
+  
+onlineta_city_hotels_v2 <- booking_df %>%
+  filter(hotel=="City Hotel") %>%
+  filter(market_segment=="Online TA")
+
+view(onlineta_city_hotels_v2)
+ggplot(data = onlineta_city_hotels_v2) +
+  geom_point(mapping = aes(x = lead_time, y = children))

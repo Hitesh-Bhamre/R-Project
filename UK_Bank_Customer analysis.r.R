@@ -5,8 +5,8 @@ setwd("D:\\R Project\\UK_Bank_Customer")
 my_bank = read.csv("UK_Bank_Customer.csv")
 
 bank = as.data.frame(my_bank)
-view(bank)
-
+View(bank)
+install.packages("TinyTeX")
 #packages 
 library(psych)
 library(tidyr)
@@ -22,6 +22,7 @@ library(plotly)
 dim(bank)
 str(bank)
 describe(bank)
+summary(bank)
 head(bank)
 
 ## Dataset Cleaning ##
@@ -37,14 +38,24 @@ bank <- rename(bank, Customer_ID = Customer.ID,
 view(bank)
 
 
-## Change datatype of Attribytes
+## Change datatype of Attributes
 
-bank$Deposit = as.integer(bank$Deposit)
-class(bank$Deposit)
+## Change class of Date column
 
-typeof(bank$Age)
-bank$Age = as.integer(bank$Age)
+typeof(bank$Date)
+class(bank$Date)
 
+bank$Date <- strptime(bank$Date, "%B %d, %Y")
+
+view(bank)
+
+#bank$Deposit = as.integer(bank$Deposit)
+#class(bank$Deposit)
+
+#typeof(bank$Age)
+#bank$Age = as.integer(bank$Age)
+
+bank$
 
 #Checking NA Values
 
@@ -69,14 +80,7 @@ sum(is.na(bank$Age))
 
 bank$Age <- format(round(bank$Age, 0))
 
-## Change class of Date column
 
-typeof(bank$Date)
-class(bank$Date)
-
-bank$Date <- strptime(bank$Date, "%B %d, %Y")
-
-view(bank)
 
 #bank <- mutate(bank, Month = as.numeric(format(bank$Date, format = "%m")))
 
@@ -135,6 +139,7 @@ hist_age <- ggplot(data = bank,
                              fill = "black")+
               ggtitle("Age Distribution")+
               labs(x = "Age", y = "Frequency")
+
 hist_age
 
 
@@ -157,7 +162,6 @@ bar_region
 ## Job_classification Pie Chart
 table(bank$Job_Classification)
 job <- as.data.frame(table(bank$Job_Classification))
-job
 job<- rename(job, Job_Category = Var1)
 job
 pie_chart_job <- plot_ly(data = job, title="Job Classification",
@@ -183,7 +187,3 @@ bar_job <- ggplot(jc_group,
            ggtitle("Job Category by Deposits")+
            ylim(0,550000)
 bar_job
-
-
-## End Project ## 
-
